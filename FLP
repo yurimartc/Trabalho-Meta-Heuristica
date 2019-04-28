@@ -1,0 +1,71 @@
+import os
+
+class FLP(object):
+    m = 0 #Quantidade de facilidades j de j = 1 até m
+    n = 0 #QUantidade de clientes  i de i = 1 até n
+    f = [] #Custo Fixo de cada capacidade j
+    M = [] #Produçã máxima de cada capacidade j
+    d = [] #Demanda de cada cliente i
+    c = [] #Matriz de custo de cada instação j para cada cliente i
+    #Representação será essa?? - YURI
+    Y = [] #Vetor binário: se a facilidade j for aberta, então Yj = 1, cc Yj = 0
+    x = [] #Matriz: volume tranportado da capacidade j para o cliente i
+    
+    #Função para abrir uma instancia, dado o caminho dela
+    def open(self, path):
+        f = open(path)
+        linhas = f.readlines()
+        self.m = int(linhas[0].split()[0])       #número de facilidades
+        self.n = int(linhas[0].split()[1])       #número de clientes
+        flag = 0
+        for i in linhas:
+            L = i.split()
+            if(0 < flag <= self.m):
+                self.f.append(float(L[0]))
+                self.M.append(float(L[1]))          
+                
+            if(flag == self.m+1 ):
+                self.d = [float (j) for j in L]
+                
+            if(flag >= self.m+2):
+                aux = []
+                for j in range(len(L)):
+                    aux.append(float(L[j]))
+                self.c.append(aux)    
+        
+            flag += 1
+    # Função para avaliar as soluções de várias instancias
+    def benchmark(self, diretorio, maxinter):
+        fList = os.listdir(diretorio)
+        cont = 0
+        for l in fList:
+            path = diretorio+"/"+l
+            sol = FLP()
+            sol.open(path)
+            print(sol.d)
+            print(maxinter)
+            cont += 1
+            print("------------------")
+            if(maxinter > 0 and cont > maxinter):
+                break
+ 
+class FLPSol(FLP):
+    def __init__(self, FLP):
+        self.m = FLP.m #Quantidade de facilidades j de j = 1 até m
+        self.n = FLP.n #QUantidade de clientes  i de i = 1 até n
+        self.f = FLP.f = [] #Custo Fixo de cada capacidade j
+        self.M = FLP.M #Produçã máxima de cada capacidade j
+        self.d = FLP.d #Demanda de cada cliente i
+        self.c = FLP.c #Matriz de custo de cada instação j para cada cliente i
+        self.Y = FLP.Y #Vetor binário: se a facilidade j for aberta, então Yj = 1, cc Yj = 0
+        self.x = FLP.x #Matriz: volume tranportado da capacidade j para o cliente i.
+    def solucaoInicial():
+        return
+    
+    def moveTo():
+        return
+    
+caminho = "C:/Users/yuri.martins/Documents/UFC/MH2019-master/Trabalho/30-200"       #Alterar a pasta para funcionar
+t = FLP()     
+test = FLPSol(t) #Dúvida se precisa de duas classes como o albert usa... - YURI
+test.benchmark(caminho,10)
